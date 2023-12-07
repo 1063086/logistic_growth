@@ -1,20 +1,41 @@
-exponential_fun <- function(t) {
-  N <- N0 * exp(r * t)
+# Load necessary libraries
+install.packages(c("ggplot2", "dplyr"))
+library(ggplot2)
+library(dplyr)
+
+# Function to calculate logistic growth
+logistic_fun <- function(t, N0, r, K) {
+  N <- (N0 * K * exp(r * t)) / (K - N0 + N0 * exp(r * t))
   return(N)
 }
 
-# Create a dataframe for the exponential curve
-exponential_data <- data.frame(t = growth_data$t, N = exponential_fun(growth_data$t))
+# Given parameter estimates
+N0 <- 1330.74
+r <- 0.0095218
+K <- 5.979e+10
 
-# Plot both curves
-ggplot(aes(t, N), data = growth_data) +
-  geom_function(fun = logistic_fun, colour = "red") +
-  geom_line(data = exponential_data, aes(t, N), linetype = "dashed", color = "blue") +
-  geom_point(data = growth_data, aes(t, N)) +
-  xlab("t") +
-  ylab("y") +
-  theme_bw()
+# Generate time values for the comparison graph
+t_values <- seq(0, 2400, by = 100)
 
-# Save the plot as an image
-ggsave("growth_comparison_plot.png")
+# Calculate population sizes for exponential and logistic growth
+N_exponential_values <- N0 * exp(r * t_values)
+N_logistic_values <- logistic_fun(t_values, N0, r, K)
 
+# Read growth data from the CSV file
+growth_data <- read.csv("experiment1.csv")
+
+# Create data frames for exponential and logistic growth
+exp_df <- data.frame(t = t_values, N = N_exponential_values, type = "Exponential Growth")
+logistic_df <- data.frame(t = t_values, N = N_logistic_values, type = "Logistic Growth")
+
+# Plot graphs
+ggplot() +
+  geom_line(data = exp_df, aes(x = t, y = N), color = "blue", linetype = "dashed", size = 1) +
+  geom_line(data = logistic_df, aes(x = t, y = N), color = "red", size = 1) +
+  geom_point(data = growth_data, aes(x = t, y = N), color = "black", size = 2) +
+  labs(title = "Comparison of Exponential and Logistic Growth",
+       subtitle = "Using Parameter Estimates",
+       x = "Time (min)",
+       y = "Population Size") +
+  theme_bw() +
+  facet_grid(. ~ type)
