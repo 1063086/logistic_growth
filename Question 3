@@ -1,11 +1,14 @@
 # Load necessary libraries
-install.packages(c("ggplot2", "dplyr"))
+install.packages(c("ggplot2", "gridExtra"))
 library(ggplot2)
-library(dplyr)
+library(gridExtra)
 
-# Function to calculate logistic growth
+# Read growth data
+growth_data <- read.csv("experiment1.csv")
+
+# Define logistic growth function
 logistic_fun <- function(t, N0, r, K) {
-  N <- (N0 * K * exp(r * t)) / (K - N0 + N0 * exp(r * t))
+  N <- K / (1 + ((K - N0) / N0) * exp(-r * t))
   return(N)
 }
 
@@ -14,28 +17,24 @@ N0 <- 1330.74
 r <- 0.0095218
 K <- 5.979e+10
 
-# Generate time values for the comparison graph
-t_values <- seq(0, 2400, by = 100)
-
-# Calculate population sizes for exponential and logistic growth
+# Calculate Population Size at t = 4980 min
+t_values <- seq(0, 5000, by = 100)
 N_exponential_values <- N0 * exp(r * t_values)
-N_logistic_values <- logistic_fun(t_values, N0, r, K)
+N_logistic_values <- logistic_fun(t_values, N0 = N0, r = r, K = K)
 
-# Read growth data from the CSV file
-growth_data <- read.csv("experiment1.csv")
-
-# Create data frames for exponential and logistic growth
-exp_df <- data.frame(t = t_values, N = N_exponential_values, type = "Exponential Growth")
-logistic_df <- data.frame(t = t_values, N = N_logistic_values, type = "Logistic Growth")
-
-# Plot graphs
-ggplot() +
-  geom_line(data = exp_df, aes(x = t, y = N), color = "blue", linetype = "dashed", size = 1) +
-  geom_line(data = logistic_df, aes(x = t, y = N), color = "red", size = 1) +
-  geom_point(data = growth_data, aes(x = t, y = N), color = "black", size = 2) +
-  labs(title = "Comparison of Exponential and Logistic Growth",
-       subtitle = "Using Parameter Estimates",
-       x = "Time (min)",
-       y = "Population Size") +
-  theme_bw() +
-  facet_grid(. ~ type)
+# Plot the comparison graphs side by side
+grid.arrange(
+  ggplot() +
+    geom_line(aes(t_values, N_exponential_values), color = "blue", linetype = "dashed", size = 1) +
+    labs(title = "Exponential Growth",
+         x = "Time (min)",
+         y = "Population Size") +
+    theme_bw(),
+  ggplot() +
+    geom_line(aes(t_values, N_logistic_values), color = "red", size = 1) +
+    labs(title = "Logistic Growth",
+         x = "Time (min)",
+         y = "Population Size") +
+    theme_bw(),
+  ncol = 2
+)
