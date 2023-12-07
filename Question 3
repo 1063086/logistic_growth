@@ -1,1 +1,20 @@
+exponential_fun <- function(t) {
+  N <- N0 * exp(r * t)
+  return(N)
+}
+
+# Create a dataframe for the exponential curve
+exponential_data <- data.frame(t = growth_data$t, N = exponential_fun(growth_data$t))
+
+# Plot both curves
+ggplot(aes(t, N), data = growth_data) +
+  geom_function(fun = logistic_fun, colour = "red") +
+  geom_line(data = exponential_data, aes(t, N), linetype = "dashed", color = "blue") +
+  geom_point(data = growth_data, aes(t, N)) +
+  xlab("t") +
+  ylab("y") +
+  theme_bw()
+
+# Save the plot as an image
+ggsave("growth_comparison_plot.png")
 
