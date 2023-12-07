@@ -1,3 +1,4 @@
+Answers to Questions 1, 2, 3: 
 1) (10 points) Annotate the README.md file in your logistic growth repo with more detailed information about the analysis. Add a section on the results and include the estimates for N0, r and K (mention which *.csv file you used).
 This repository contains scripts for analyzing logistic growth data. The analysis is based on the data provided in `experiment1.csv`.
 The model parameters were estimated using a linear approximation method on the provided data. The estimates are as follows:
