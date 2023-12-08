@@ -81,7 +81,7 @@ logistic growth population size at t = 4980 minutes which is 5.979e+10, there is
 ## Question 3) 
 Add an R script to your repository that makes a graph comparing the exponential and logistic growth curves (using the same parameter estimates you found). Upload this graph to your repo and include it in the README.md file so it can be viewed in the repo homepage.
 
-Code can be found here:
+Code can be found here: https://github.com/1063086/logistic_growth/blob/0bfd8c20f86191fb04ebdaf2f5532566a7f25756/Question%203
 
 ## Comparison graph: 
 
