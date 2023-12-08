@@ -3,7 +3,7 @@ Answers to Questions 1, 2, 3:
 ## Question 1) 
 Annotate the README.md file in your logistic growth repo with more detailed information about the analysis. Add a section on the results and include the estimates for N0, r and K (mention which *.csv file you used).
 
-The analysis is based on the data provided in `experiment1.csv`.
+**A**: The analysis is based on the data provided in `experiment1.csv`.
 The model parameters were estimated using a linear approximation method on the provided data. The estimates are as follows:
 
 - \( N_0 \): 1330.74
@@ -12,7 +12,7 @@ The model parameters were estimated using a linear approximation method on the p
 
 The estimates were obtained by fitting linear models to the data under different conditions.
 
-Results
+**Results**
 
 The logistic growth curve was plotted using the estimated parameters:
 
@@ -37,6 +37,7 @@ ggplot(aes(t, N), data = growth_data) +
 ## Question 2)  
 Using your estimates of N0 and r to calculate the population size at t = 4980 min, assuming that the population grows exponentially. How does it compare to the population size predicted under logistic growth?
 
+**A**: 
 Using my estimates in R: 
 ```R
 # Given parameter estimates
@@ -81,6 +82,7 @@ logistic growth population size at t = 4980 minutes which is 5.979e+10, there is
 ## Question 3) 
 Add an R script to your repository that makes a graph comparing the exponential and logistic growth curves (using the same parameter estimates you found). Upload this graph to your repo and include it in the README.md file so it can be viewed in the repo homepage.
 
+**A**: 
 Code can be found here: https://github.com/1063086/logistic_growth/blob/0bfd8c20f86191fb04ebdaf2f5532566a7f25756/Question%203
 
 ## Comparison graph: 
