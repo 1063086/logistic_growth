@@ -1,28 +1,27 @@
-# Load necessary libraries
 install.packages(c("ggplot2", "gridExtra"))
 library(ggplot2)
 library(gridExtra)
 
-# Read growth data
+# Growth data
 growth_data <- read.csv("experiment1.csv")
 
-# Define logistic growth function
+# Logistic growth function
 logistic_fun <- function(t, N0, r, K) {
   N <- K / (1 + ((K - N0) / N0) * exp(-r * t))
   return(N)
 }
 
-# Given parameter estimates
+# Parameter estimates
 N0 <- 1330.74
 r <- 0.0095218
 K <- 5.979e+10
 
-# Calculate Population Size at t = 4980 min
+# Population Size at t = 4980 min
 t_values <- seq(0, 5000, by = 100)
 N_exponential_values <- N0 * exp(r * t_values)
 N_logistic_values <- logistic_fun(t_values, N0 = N0, r = r, K = K)
 
-# Plot the comparison graphs side by side
+# Plot the comparison graphs 
 grid.arrange(
   ggplot() +
     geom_line(aes(t_values, N_exponential_values), color = "blue", linetype = "dashed", size = 1) +
