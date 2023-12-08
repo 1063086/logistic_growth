@@ -3,7 +3,82 @@ Answers to Questions 1, 2, 3:
 ## Question 1) 
 Annotate the README.md file in your logistic growth repo with more detailed information about the analysis. Add a section on the results and include the estimates for N0, r and K (mention which *.csv file you used).
 
-**A**: The analysis is based on the data provided in `experiment1.csv`, which is based on the logistic growth data of the bacterium *Escherichia coli*.
+**A**: The analysis is based on the data provided in `experiment1.csv`, which is based on the logistic growth data of the bacterium *Escherichia coli* in a growth medium.
+
+In the analysis we were seeking to find estimates for each of the parameters: 
+ N_0 : Initial population size. In the context of logistic growth, it represents the population size at the starting point of the growth process.
+
+r: Intrinsic growth rate. This parameter represents the rate at which the population grows when it is not constrained by resources. It influences the steepness of the growth curve.
+
+K: Carrying capacity. This is the maximum population size that can be sustainably supported. As the population approaches this limit, the growth rate slows down, and the population eventually stabilizes.
+
+```R
+#Script to plot the logistic growth data
+
+growth_data <- read.csv("experiment1.csv")
+
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(aes(t,N), data = growth_data) +
+  
+  geom_point() +
+  
+  xlab("t") +
+  
+  ylab("y") +
+  
+  theme_bw()
+
+ggplot(aes(t,N), data = growth_data) +
+  
+  geom_point() +
+  
+  xlab("t") +
+  
+  ylab("y") +
+  
+  scale_y_continuous(trans='log10')
+```
+This shows that growth plateaus at a certain point and therefore gave the carrying capacty estimate of K = 5.979e+10
+![5c4bb984-7594-4e07-bc1f-6a2ad55ae557](https://github.com/1063086/logistic_growth/assets/150149096/92da0d09-3eef-4a14-ab5b-dba207bb2cbd)
+
+```R
+growth_data <- read.csv("experiment1.csv")
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(aes(t,N), data = growth_data) +
+  
+  geom_point() +
+  
+  xlab("Time (min)") +
+  
+  ylab("N (# cells)") +
+  
+  theme_bw()
+```
+This can then detail the N_0 figure, which in this case is estimated to be 1330.74
+![2463cd46-ce4e-40e2-93d6-90157bbe64df](https://github.com/1063086/logistic_growth/assets/150149096/4dfab289-be73-4ed0-a10d-738fcffc5bf7)
+
+```R
+growth_data <- read.csv("experiment1.csv")
+
+#Case 1. K >> N0, t is small
+
+data_subset1 <- growth_data %>% filter(t<1200) %>% mutate(N_log = log(N))
+
+model1 <- lm(N_log ~ t, data_subset1)
+summary(model1)
+
+#Case 2. N(t) = K
+
+data_subset2 <- growth_data %>% filter(t>2400)
+
+model2 <- lm(N ~ 1, data_subset2)
+summary(model2)
+```
+This can help inform us of an approximation for r. In this case we need to use the upper and lower bounds for t, so that we are accountingfor the time during the growth phase. 
 
 The model parameters were estimated using a linear approximation method on the data. The estimates are as follows:
 
