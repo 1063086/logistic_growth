@@ -3,8 +3,9 @@ Answers to Questions 1, 2, 3:
 ## Question 1) 
 Annotate the README.md file in your logistic growth repo with more detailed information about the analysis. Add a section on the results and include the estimates for N0, r and K (mention which *.csv file you used).
 
-**A**: The analysis is based on the data provided in `experiment1.csv`.
-The model parameters were estimated using a linear approximation method on the provided data. The estimates are as follows:
+**A**: The analysis is based on the data provided in `experiment1.csv`, which is based on the logistic growth data of the bacterium *Escherichia coli*.
+
+The model parameters were estimated using a linear approximation method on the data. The estimates are as follows:
 
 - \( N_0 \): 1330.74
 - \( r \): 0.0095218
